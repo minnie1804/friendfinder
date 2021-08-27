@@ -41,7 +41,6 @@ def login(request):
   return render(request,"login.html")
     
 def signup(request):
-  
   #POST request
   if request.method == 'POST':
     #Storing data entered by user in variables
@@ -64,7 +63,7 @@ def signup(request):
       
       else:
         #If does not exist, add new details into database
-        cursor.execute("insert into login_detail values(5,\'"+name+"\',\'"+email+"\',\'"+password+"\')")
+        cursor.execute("insert into login_detail values(\'"+email+"\',\'"+password+"\',\'"+name+"\')")
 
         #Show user that signup has been completed
         return render(request,"success.html")
