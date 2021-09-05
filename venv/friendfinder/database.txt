@@ -1,0 +1,13 @@
+create database friendfinder;
+use friendfinder;
+
+create table login_detail(
+email varchar(250) primary key,
+password varchar(250),
+user_name varchar(250)
+);
+
+create table hobbies(
+email varchar(250) primary key,
+hobbies varchar(250)
+);

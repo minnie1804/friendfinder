@@ -19,7 +19,7 @@ def login(request):
     #Try block is used to catch errors in database connection
     try:
       #Get password corresponding to email from database
-      cursor.execute("select password from login_detail where email=\'"+email+"\'")
+      cursor.execute("select password from friends_login_detail where email=\'"+email+"\'")
 
       #Store it in data
       data=cursor.fetchall()
@@ -29,6 +29,7 @@ def login(request):
       if password==data[0][0]:
         
         #If passwords match allow user to enter home-page
+        request.session['email']=email
         return render(request,"home.html")
       
       else:
@@ -54,7 +55,7 @@ def signup(request):
     try:
       
       #Check if entered email already exists in database
-      cursor.execute("select count(*) from login_detail where email=\'"+email+"\'")
+      cursor.execute("select count(*) from friends_login_detail where email=\'"+email+"\'")
       data=cursor.fetchall()
       
       if data[0][0]==1:
@@ -63,8 +64,8 @@ def signup(request):
       
       else:
         #If does not exist, add new details into database
-        cursor.execute("insert into login_detail values(\'"+email+"\',\'"+password+"\',\'"+name+"\')")
-
+        cursor.execute("insert into friends_login_detail values(\'"+email+"\',\'"+password+"\',\'"+name+"\')")
+        cursor.execute("insert into friends_hobbies values(\'"+email+"\',\'\');")
         #Show user that signup has been completed
         return render(request,"success.html")
     except:
@@ -75,6 +76,25 @@ def signup(request):
 
 def home(request):
   return render(request, "home.html")
+
+
+def myhobbies(request):
+  #POST request
+  if request.method == 'POST':
+    hobbies=request.POST['hobbies']
+    email=request.session.get('email')
+    
+    #MySQL cursor initialization
+    cursor=connection.cursor()
+
+    try:
+      cursor.execute("update friends_hobbies set hobbies=\'"+hobbies+"\' where email=\'"+email+"\'")
+      return render(request,"success.html")
+    except:
+      return render(request,"error.html")
+
+  #GET request
+  return render(request, "myhobbies.html")
 
 
 
