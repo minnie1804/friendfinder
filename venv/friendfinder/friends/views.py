@@ -75,6 +75,35 @@ def signup(request):
   return render(request, "signup.html")
 
 def home(request):
+  #POST request
+  if request.method == 'POST':
+    hobbies=request.POST['hobbies'].split(',')
+    email=request.session.get('email')
+    
+    #MySQL cursor initialization
+    cursor=connection.cursor()
+
+    try:
+      cursor.execute("select * from friends_hobbies;")
+      data=cursor.fetchall()
+
+      final_lis=[]
+      lis=[]
+      for record in data:
+        cursor.execute("select username from friends_login_detail where email =\'"+record[0]+"\'")
+        name=cursor.fetchall()
+        lis.append([name,record[0]])
+        lis.append(record[1].split(','))
+        final_lis.append(lis)
+        lis=[]
+      hobbies_set=set(hobbies)
+
+      sorted_final_lis=sorted(final_lis,key=lambda x:len(hobbies_set.intersection(x[1])))
+      
+      return render(request,"matches.html",{"friends":sorted_final_lis})
+    except:
+      pass
+
   return render(request, "home.html")
 
 
