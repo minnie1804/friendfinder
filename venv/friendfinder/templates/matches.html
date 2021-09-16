@@ -1,11 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
-  <body>
-    <h1>Your matches</h1>
-    <p>
-      {% for i in friends %} {{i[0][0]}} <br />
-      {{i[0][1]}} <br />
-      {endfor %}
-    </p>
-  </body>
+<head>
+	<title>Login</title>
+	{% load static %}
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="{% static "Login/images/icons/favicon.ico" %}"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static "Login/vendor/bootstrap/css/bootstrap.min.css" %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static "Login/fonts/font-awesome-4.7.0/css/font-awesome.min.css" %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static "Login/fonts/iconic/css/material-design-iconic-font.min.css" %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static "Login/vendor/animate/animate.css" %}">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="{% static "Login/vendor/css-hamburgers/hamburgers.min.css" %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static "Login/vendor/animsition/css/animsition.min.css" %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static "Login/vendor/select2/select2.min.css" %}">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="{% static "Login/vendor/daterangepicker/daterangepicker.css" %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static "Login/css/util.css" %}">
+	<link rel="stylesheet" type="text/css" href="{% static "Login/css/main1.css" %}">
+<!--===============================================================================================-->
+</head>
+<body>
+	
+	<div class="limiter">
+		<div class="container-login100" style="background-image: url('{% static "Login/images/bg-01.jpg" %}');">
+			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
+
+            <form class="login100-form validate-form" >
+            <span class="login100-form-title p-b-49"> Friend Finder </span>
+{% for i in friends %}
+
+            <div class="row" style="margin-bottom: 25px">
+{%for j in i%}
+              <div class="col-sm-3">
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title">{{j.0.0}}</h5>
+                    <p class="card-text">Likes {%for k in j.1%}{{k}} {%endfor%}</p>
+                    <p class="card-text">{{j.0.1}}</p>
+                  </div>
+                </div>
+              </div>
+{%endfor%}
+            </div>
+
+
+{% endfor %}
+
+          </form>
+
+            <div class="container-login100-form-btn">
+              <div class="wrap-login100-form-btn">
+                <div class="login100-form-bgbtn"></div>
+                <button  onclick="window.location.href='/friendfinder/home'" class="login100-form-btn">Return to homepage</button>
+              </div>
+            </div>
+
+            <div class="flex-col-c p-t-100">
+              <span class="txt1 p-b-17"> Or edit my hobbies using</span>
+
+              <a href="/friendfinder/myhobbies/" class="txt2"> Edit my preferences </a>
+            </div>
+			</div>
+		</div>
+	</div>
+	
+
+	<div id="dropDownSelect1"></div>
+	
+<!--===============================================================================================-->
+	<script src="{% static "Login/vendor/jquery/jquery-3.2.1.min.js" %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static "Login/vendor/animsition/js/animsition.min.js" %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static "Login/vendor/bootstrap/js/popper.js" %}"></script>
+	<script src="{% static "Login/vendor/bootstrap/js/bootstrap.min.js" %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static "Login/vendor/select2/select2.min.js" %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static "Login/vendor/daterangepicker/moment.min.js" %}"></script>
+	<script src="{% static "Login/vendor/daterangepicker/daterangepicker.js" %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static "Login/vendor/countdowntime/countdowntime.js" %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static "Login/js/main.js" %}"></script>
+
+</body>
 </html>

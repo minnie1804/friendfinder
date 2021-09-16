@@ -86,23 +86,24 @@ def home(request):
     try:
       cursor.execute("select * from friends_hobbies;")
       data=cursor.fetchall()
-
       final_lis=[]
       lis=[]
       for record in data:
-        cursor.execute("select username from friends_login_detail where email =\'"+record[0]+"\'")
+        cursor.execute("select user_name from friends_login_detail where email =\'"+record[0]+"\'")
         name=cursor.fetchall()
-        lis.append([name,record[0]])
+        lis.append([name[0][0],record[0]])
         lis.append(record[1].split(','))
         final_lis.append(lis)
         lis=[]
       hobbies_set=set(hobbies)
-
-      sorted_final_lis=sorted(final_lis,key=lambda x:len(hobbies_set.intersection(x[1])))
-      
+      sorted_final_lis=sorted(final_lis,key=lambda x:len(hobbies_set.intersection(x[1])))[::-1]
+      for i in range(len(sorted_final_lis)):
+        if(len(hobbies_set.intersection(sorted_final_lis[i][1]))==0):
+          del sorted_final_lis[i]
+      sorted_final_lis=[sorted_final_lis[i*4:(i+1)*4] for i in range((len(sorted_final_lis)+4-1)//4)]
       return render(request,"matches.html",{"friends":sorted_final_lis})
     except:
-      pass
+      return render(request,"error.html")
 
   return render(request, "home.html")
 
@@ -118,12 +119,20 @@ def myhobbies(request):
 
     try:
       cursor.execute("update friends_hobbies set hobbies=\'"+hobbies+"\' where email=\'"+email+"\'")
-      return render(request,"success.html")
+      return render(request,"home.html")
     except:
       return render(request,"error.html")
 
   #GET request
-  return render(request, "myhobbies.html")
+  #MySQL cursor initialization
+  cursor=connection.cursor()
+  email=request.session.get('email')
+  try:
+    cursor.execute("select hobbies from friends_hobbies where email=\'"+email+"\'")
+    data=cursor.fetchall()    
+    return render(request, "myhobbies.html",{"hobbies":data[0][0]})
+  except:
+    return render(request,"error.html")
 
 
 

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <body>
-    <form action="/friendfinder/myhobbies/" method="post">
+    <form action="/friendfinder/home/" method="post">
       {% csrf_token %}
       <div class="container">
         <label for="hobbies"><b>Hobbies</b></label>
@@ -11,7 +11,7 @@
           name="hobbies"
           required
         />
-        <button type="submit">Set preferences</button>
+        <button type="submit">Find friends</button>
       </div>
     </form>
 
