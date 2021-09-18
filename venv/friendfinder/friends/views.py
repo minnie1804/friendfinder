@@ -124,17 +124,18 @@ def home(request):
 
       #Sort the final_list based on number of common hobbies in descending order with a custom sort function
       sorted_final_list=sorted(final_list,key=lambda x:len(hobbies_set.intersection(x[1])))[::-1]
-
+      
       #Remove persons who have no hobbies in common
-      for i in range(len(sorted_final_list)):
+      for i in range(len(sorted_final_list)-1,-1,-1):
         if(len(hobbies_set.intersection(sorted_final_list[i][1]))==0):
           del sorted_final_list[i]
+        
 
       #If no matches found, display message
       if (len(sorted_final_list)==0):
         return render(request,"base.html",{"msg":"Sorry, no matches found"})
-
-      #Group the matched persons in groups of 4 to display in html
+      
+      #Group the matched persons in groups of 4 to display in html. (So that box doesnt go out of page, it adds a new line)
       sorted_final_list=[sorted_final_list[i*4:(i+1)*4] for i in range((len(sorted_final_list)+4-1)//4)]
 
       return render(request,"matches.html",{"friends":sorted_final_list})
