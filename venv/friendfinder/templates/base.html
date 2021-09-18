@@ -43,24 +43,10 @@
 			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
 				<form class="login100-form validate-form" method="POST" action="/friendfinder/myhobbies/">
             {%csrf_token%}
-<span class="login100-form-title p-b-49"> My Hobbies </span>
-
-            <div
-              class="wrap-input100 validate-input m-b-23"
-            >
-              <span class="label-input100">Hobbies</span>
-              <input class="input100" type="text" name="hobbies" value="{{hobbies}}" />
-            </div>
-
-            <div class="container-login100-form-btn">
-              <div class="wrap-login100-form-btn">
-                <div class="login100-form-bgbtn"></div>
-                <button class="login100-form-btn">Save edit</button>
-              </div>
-            </div>
+<span class="login100-form-title p-b-49"> {{msg}} </span>
 
             <div class="flex-col-c p-t-100">
-              <span class="txt1 p-b-17"> Or go back home using </span>
+              <span class="txt1 p-b-17"> Go back home using </span>
 
               <a href="/friendfinder/home/" class="txt2"> Home </a>
             </div>

@@ -1,0 +1,11 @@
+Activate virtual environment
+
+1) Set appropriate username, password of mysql server running on system in lines 81, 82 of friendfinder/settings.py file
+2) python manage.py makemigrations
+3) python manage.py migrate
+4) python manage.py runserver
+5) Visit localhost:8000/friendfinder/login/
+
+Notes:
+1) Database strucure is available in database.txt file, which is implemented in friends/models.py file
+2) All driver code is available in friends/view.py file
